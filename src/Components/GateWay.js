@@ -1,5 +1,5 @@
 import React, { } from 'react';
-import { Col, Accordion, Row, ListGroup, Button } from 'react-bootstrap';
+import { Col, Accordion, Row, ListGroup, Button, Alert } from 'react-bootstrap';
 import { AiFillDelete } from 'react-icons/ai'
 const GateWay = ({
     gateway,
@@ -51,8 +51,8 @@ const GateWay = ({
                                                     setShowDeleteDeviceModal(true);
                                                 }}
                                             >
-                                                < AiFillDelete 
-                                                style={deleteIconSyle}
+                                                < AiFillDelete
+                                                    style={deleteIconSyle}
                                                 />
                                             </Button>
                                         </Col>
@@ -62,15 +62,17 @@ const GateWay = ({
                         </ListGroup>
                     ) : (
                         <Row>
-                            <Col className='d-flex justify-content-center'>
-                                <h5>No devices for this GateWay</h5>
+                            <Col className='d-flex justify-content-center mt-2'>
+                                <Alert variant='info'>
+                                   <h6>No devices yet !</h6> 
+                                </Alert>
                             </Col>
                         </Row>
                     )}
                     <Row className='mt-5'>
                         <Col className='d-flex justify-content-between align-items-center'>
                             <Button
-                            size='sm'
+                                size='sm'
                                 onClick={() => {
                                     setGatewaySelected(gateway._id);
                                     getAllDevices();

@@ -1,14 +1,15 @@
 import React, { PureComponent } from 'react'
 import { Navbar, Container, Nav } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const NavBar = () => {
     return (
         <Navbar bg="dark" variant="dark">
             <Container>
-                <Navbar.Brand href="/">GateWays App</Navbar.Brand>
+                <Navbar.Brand as={Link} to="/">GateWays App</Navbar.Brand>
                 <Nav className="me-auto">
-                    <Nav.Link href="/about">About</Nav.Link>
-                    <Nav.Link href="/devices">Devices</Nav.Link>
+                    <Nav.Link as={Link} to="/devices">Devices</Nav.Link>
+                    <Nav.Link as={Link} to="/gateways">GateWays</Nav.Link>
                 </Nav>
             </Container>
         </Navbar>

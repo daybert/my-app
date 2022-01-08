@@ -1,10 +1,11 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { Modal, Col, Container, ListGroup, Row, ModalBody, Button, ModalFooter } from 'react-bootstrap';
+import { Modal, Col, Container, Row, ModalBody, Button, ModalFooter } from 'react-bootstrap';
 import ModalHeader from 'react-bootstrap/esm/ModalHeader';
 import GateWay from './GateWay';
 import { BsQuestionOctagon } from "react-icons/bs";
 import AddDeviceModal from './AddDeviceModal';
+import DeleteDeviceModal from './DeleteDeviceModal';
 
 const GateWays = () => {
 
@@ -63,17 +64,6 @@ const GateWays = () => {
         setShowDeleteDeviceModal(false);
     };
 
-    // STYLE OBJECTS
-    const buttonStyle = {
-        borderRadius: '0px',
-        color: 'white'
-    }
-
-    const iconStyles = {
-        fontSize: '70px',
-        color: 'black'
-    }
-
     useEffect(() => {
         getAllGateWays();
     }, [])
@@ -86,45 +76,12 @@ const GateWays = () => {
                 devices={devices}
                 showAddDeviceModal={showAddDeviceModal}
             />
-            <Modal
-                size='sm'
-                show={showDeleteDeviceModal}
-                centered
-                onHide={() => setShowDeleteDeviceModal(false)}>
-                <ModalHeader closeButton>
-                    <h4>Sure to delete ?</h4>
-                </ModalHeader>
-                <ModalBody className='d-flex justify-content-center p-4'>
-                    <BsQuestionOctagon
-                        style={iconStyles}
-                    />
-                </ModalBody>
-                <ModalFooter className='justify-content-center'>
-                    <Col lg={5}>
-                        <Button
-                            variant='info'
-                            size="lg"
-                            className='w-100'
-                            style={buttonStyle}
-                            onClick={() => setShowDeleteDeviceModal(false)}>
-                            Cancel
-                        </Button>
-                    </Col>
-                    <Col lg={5}>
-                        <Button
-                            variant='danger'
-                            size="lg"
-                            className='w-100'
-                            style={buttonStyle}
-                            onClick={() => {
-                                deleteDeviceFromGateWay(deviceSelected);
-                            }}
-                        >
-                            Delete
-                        </Button>
-                    </Col>
-                </ModalFooter>
-            </Modal>
+            <DeleteDeviceModal
+                deleteDeviceFromGateWay={deleteDeviceFromGateWay}
+                setShowDeleteDeviceModal={setShowDeleteDeviceModal}
+                deviceSelected={deviceSelected}
+                showDeleteDeviceModal={showDeleteDeviceModal}
+            />
             <Row>
                 {gateways.map((gateway, index) => (
                     <Col lg={4} className='py-3 px-3' key={gateway._id}>
