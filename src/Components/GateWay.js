@@ -24,8 +24,19 @@ const GateWay = ({
     return (
         <Accordion className='shadow' defaultActiveKey={'0'}>
             <Accordion.Item eventKey={JSON.stringify(index)} style={accordionStyles}>
-                <Accordion.Header className='col' >
-                    {gateway.human_readable_name}
+                <Accordion.Header>
+                    <Col xs={12}>
+                        <Row>
+                            <Col>
+                                <h5>{gateway.human_readable_name}</h5>
+                            </Col>
+                        </Row>
+                        <Row className='mt-3'>
+                            <Col>
+                                <h6 className='text-muted'>IP: {gateway.ipv4_address}</h6>
+                            </Col>
+                        </Row>
+                    </Col>
                 </Accordion.Header>
                 <Accordion.Body>
                     <Row className='mb-3'>
@@ -79,7 +90,7 @@ const GateWay = ({
                                     setShowAddDeviceModal(true);
                                 }}
                                 variant='info'
-                                className='rounded-circle text-white p-2 h-75 d-flex justify-content-center align-items-center'
+                                className='rounded-circle text-white px-3  d-flex justify-content-center align-items-center'
                             >
                                 <h3>+</h3>
                             </Button>

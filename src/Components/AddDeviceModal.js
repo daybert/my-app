@@ -10,10 +10,11 @@ const AddDeviceModal = ({ showAddDeviceModal, setShowAddDeviceModal, devices, ad
             </Modal.Header>
             <Modal.Body>
                 <Row>
-                    <Col>
+                    <Col className='px-5'>
                         <ListGroup variant="flush">
                             {devices.map((device) => (
                                 <ListGroup.Item
+                                    className='py-3'
                                     key={device._id}
                                     onClick={() => addDevice(device._id)}
                                     style={{ cursor: 'pointer' }}
