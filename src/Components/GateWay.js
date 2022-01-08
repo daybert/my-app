@@ -1,4 +1,4 @@
-import React, { } from 'react';
+import React from 'react';
 import { Col, Accordion, Row, ListGroup, Button, Alert } from 'react-bootstrap';
 import { AiFillDelete } from 'react-icons/ai'
 const GateWay = ({
@@ -64,7 +64,7 @@ const GateWay = ({
                         <Row>
                             <Col className='d-flex justify-content-center mt-2'>
                                 <Alert variant='info'>
-                                   <h6>No devices yet !</h6> 
+                                    <h6>No devices yet !</h6>
                                 </Alert>
                             </Col>
                         </Row>

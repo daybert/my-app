@@ -1,7 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Navbar, Nav, Container } from 'react-bootstrap';
 import Devices from './Components/Devices';
 import Home from './Components/Home';
 import GateWays from './Components/GateWays';

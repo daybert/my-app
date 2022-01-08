@@ -1,9 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { Modal, Col, Container, Row, ModalBody, Button, ModalFooter } from 'react-bootstrap';
-import ModalHeader from 'react-bootstrap/esm/ModalHeader';
+import { Col, Container, Row } from 'react-bootstrap';
 import GateWay from './GateWay';
-import { BsQuestionOctagon } from "react-icons/bs";
 import AddDeviceModal from './AddDeviceModal';
 import DeleteDeviceModal from './DeleteDeviceModal';
 
@@ -39,12 +37,11 @@ const GateWays = () => {
     const addDevice = async (deviceId) => {
         try {
             const response = await axios.put(`http://localhost:4000/addDeviceToGateWay/${gatewaySelected}/device/${deviceId}`)
-            console.log(response);
             getAllDevices();
             getAllGateWays();
         } catch (error) {
             alert('The device already exist in the GateWay');
-            console.log('Error:', error);
+            console.log('Error:', error.message);
         }
         setShowAddDeviceModal(false);
     };
@@ -64,6 +61,7 @@ const GateWays = () => {
         setShowDeleteDeviceModal(false);
     };
 
+    //HOOKS
     useEffect(() => {
         getAllGateWays();
     }, [])

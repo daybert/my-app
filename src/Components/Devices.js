@@ -6,9 +6,11 @@ import DeleteModal from './DeleteModal';
 
 const Devices = () => {
 
+    //STATES
     const [devices, setDevices] = useState([]);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
+    //FUNCTIONS
     const getAllDevices = async () => {
         try {
             const devices = await axios.get('http://localhost:4000/devices');
@@ -34,6 +36,7 @@ const Devices = () => {
         setShowDeleteModal(false);
     };
 
+    //HOOKS
     useEffect(() => {
         getAllDevices();
     }, []);
