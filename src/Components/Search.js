@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import {
   Col,
   Container,
@@ -9,7 +9,14 @@ import {
   Button,
 } from "react-bootstrap";
 
-const Search = () => {
+import { GiCommercialAirplane } from "react-icons/gi";
+import {
+  BsArrowLeftRight,
+  BsFillCalendar2WeekFill,
+  BsSearch,
+} from "react-icons/bs";
+
+const Search = ({ title }) => {
   //STATES
   const [values, dispatch] = useReducer(
     (state, setState) => ({ ...state, ...setState }),
@@ -24,10 +31,13 @@ const Search = () => {
     }
   );
 
+  const [order, setOrder] = useState(true);
+
   //STYLE OBJECTS
   const inputStyles = {
     background: "#F0F3F5",
-    height: "60px",
+    height: "70px",
+    border: "none",
   };
 
   const titleStyle = {
@@ -37,6 +47,9 @@ const Search = () => {
   const containerStyle = {
     border: "1px solid black",
   };
+
+  const iconStyle = { color: "black", height: "23px", width: "23px" };
+  const iconStyleSearch = { ...iconStyle, color: "white" };
 
   //FUNCTIONS
   const handleFlightType = (option) => {
@@ -67,14 +80,17 @@ const Search = () => {
     dispatch({ ["destinationSelector"]: e.target.value });
   };
 
-  const handleSubmit = () => {
-    console.log(values.selectedFlightOption);
-    console.log(values.selectedPassagerOption);
-    console.log(values.selectedTravelClass);
-    console.log(values.departureDateSelector);
-    console.log(values.destinationSelector);
-    console.log(values.returnDateSelector);
-    console.log(values.originSelector);
+  const handleOrder = () => {
+    setOrder(!order);
+  };
+
+  const handleSubmit = (e) => {
+    const orderToSearch = order
+      ? `From ${values.originSelector} to ${values.destinationSelector}`
+      : `From ${values.destinationSelector} to ${values.originSelector}`;
+    e.preventDefault();
+    console.log(values);
+    console.log(orderToSearch);
     dispatch({
       selectedFlightOption: "",
       selectedPassagerOption: "",
@@ -86,7 +102,7 @@ const Search = () => {
     });
   };
 
-  //FAKE DATA
+  //OPTIONS DATA
   const flightTypeOptions = [
     "Solo ida",
     "Ida y vuelta",
@@ -112,9 +128,11 @@ const Search = () => {
   ];
 
   useEffect(() => {
-    dispatch({ ["selectedFlightOption"]: flightTypeOptions[0] });
-    dispatch({ ["selectedPassagerOption"]: passagerOptions[0] });
-    dispatch({ ["selectedTravelClass"]: travelClass[0] });
+    dispatch({
+      ["selectedFlightOption"]: flightTypeOptions[0],
+      ["selectedPassagerOption"]: passagerOptions[0],
+      ["selectedTravelClass"]: travelClass[0],
+    });
   }, []);
 
   return (
@@ -122,7 +140,7 @@ const Search = () => {
       <Row className="d-flex justify-content-center align-items-center">
         <Col lg={12} className="d-flex justify-content-start mb-3 px-4">
           <h1 className="px-2" style={titleStyle}>
-            Search hundreds of travel sites at once
+            {title}
           </h1>
         </Col>
       </Row>
@@ -167,33 +185,54 @@ const Search = () => {
           </Form.Group>
         </Col>
       </Row>
-      <Row className="px-4">
+      <Form className="px-4 row" onSubmit={handleSubmit}>
         <Col>
-          <Form.Group className="mb-3">
+          <InputGroup className="mb-3">
+            <InputGroup.Text className="rounded-0" style={inputStyles}>
+              <GiCommercialAirplane style={iconStyle} />
+            </InputGroup.Text>
+
             <Form.Control
               className="rounded-0"
               value={values.originSelector}
               onChange={handleOrigin}
               id="disabledTextInput"
               style={inputStyles}
-              placeholder="From?"
+              required
+              placeholder={order ? "From?" : "To?"}
             />
-          </Form.Group>
+          </InputGroup>
+        </Col>
+        <Col lg={1}>
+          <Button
+            style={inputStyles}
+            className="rounded-0 w-100"
+            onClick={handleOrder}
+          >
+            <BsArrowLeftRight style={iconStyle} />
+          </Button>
         </Col>
         <Col>
-          <Form.Group className="mb-3">
+          <InputGroup className="mb-3">
+            <InputGroup.Text className="rounded-0" style={inputStyles}>
+              <GiCommercialAirplane style={iconStyle} />
+            </InputGroup.Text>
             <Form.Control
               className="rounded-0"
               value={values.destinationSelector}
               onChange={handleDestination}
               id="disabledTextInput"
               style={inputStyles}
-              placeholder="To?"
+              required
+              placeholder={order ? "To?" : "From?"}
             />
-          </Form.Group>
+          </InputGroup>
         </Col>
         <Col>
-          <Form.Group className="mb-3">
+          <InputGroup className="mb-3">
+            <InputGroup.Text className="rounded-0" style={inputStyles}>
+              <BsFillCalendar2WeekFill style={iconStyle} />
+            </InputGroup.Text>
             <Form.Control
               type="date"
               value={values.departureDateSelector}
@@ -201,35 +240,31 @@ const Search = () => {
               className="rounded-0"
               id="disabledTextInput"
               style={inputStyles}
+              required
             />
-          </Form.Group>
+          </InputGroup>
         </Col>
         <Col>
           <InputGroup className="mb-3">
+            <InputGroup.Text className="rounded-0" style={inputStyles}>
+              <BsFillCalendar2WeekFill style={iconStyle} />
+            </InputGroup.Text>
             <FormControl
               type="date"
               value={values.returnDateSelector}
               onChange={handleReturn}
               aria-label="Default"
               style={inputStyles}
+              required
               className="rounded-0"
               aria-describedby="inputGroup-sizing-default"
             />
-            <Button variant="danger" id="button-addon1" onClick={handleSubmit}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                fill="currentColor"
-                className="bi bi-search"
-                viewBox="0 0 16 16"
-              >
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-              </svg>
+            <Button variant="danger" id="button-addon1" type="submit">
+              <BsSearch style={iconStyleSearch} />
             </Button>
           </InputGroup>
         </Col>
-      </Row>
+      </Form>
     </Container>
   );
 };
